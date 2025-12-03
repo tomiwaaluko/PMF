@@ -1,42 +1,902 @@
+:root {
+  --blue-900: #0c2f87;
+  --blue-800: #123fbe;
+  --blue-700: #1f59d7;
+  --blue-600: #2f6ee6;
+  --yellow: #f5b400;
+  --text-dark: #0e2157;
+  --text-muted: #4a5677;
+  --card-shadow: 0 14px 42px rgba(12, 47, 135, 0.08);
+}
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  max-width: none;
+}
+
+.page {
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.75), transparent 40%), #f6f8fc;
+  color: var(--text-dark);
+}
+
+.top-bar {
+  background: #facc2e;
+  color: #0c2f87;
+  font-size: 0.9rem;
+  padding: 10px 6vw;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.top-bar span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.top-bar .muted {
+  font-weight: 500;
+  color: #0e2157;
+}
+
+.apply-btn {
+  background: #0c2f87;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  box-shadow: 0 12px 30px rgba(12, 47, 135, 0.2);
+}
+
+.apply-btn:hover {
+  background: #0a2566;
+  transform: translateY(-1px);
+}
+
+.nav {
+  padding: 18px 6vw;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(17, 45, 112, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.menu {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+  font-weight: 600;
+  color: #143c9e;
+  position: relative;
+}
+
+.menu a {
+  padding: 8px 10px;
+  border-radius: 6px;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.menu a:hover {
+  background: rgba(47, 110, 230, 0.1);
+  color: var(--blue-900);
+}
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 8px 10px;
+  border-radius: 6px;
+}
+
+.nav-item button:hover {
+  background: rgba(47, 110, 230, 0.1);
+}
+
+.dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #2c4da5;
+  color: #fff;
+  border-radius: 8px;
+  min-width: 180px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+  padding: 10px 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+
+.nav-item:hover .dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 16px;
+  color: #fff;
+}
+
+.dropdown a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(105deg, rgba(12, 47, 135, 0.9), rgba(47, 110, 230, 0.7)), url('https://lendinginflorida.com/wp-content/uploads/2020/08/Oceans-lending-background-12.jpg') center/cover no-repeat;
+  color: #fff;
+  padding: 90px 6vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: end;
+  gap: 30px;
+}
+
+.hero-copy {
+  max-width: 520px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffd369;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 4vw, 42px);
+  margin: 14px 0 12px;
+  line-height: 1.2;
+}
+
+.hero p {
+  margin: 0 0 18px;
+  color: #f1f3fb;
+  font-size: 1.02rem;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.ghost-btn {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 150ms ease, color 150ms ease;
+}
+
+.ghost-btn:hover {
+  background: #fff;
+  color: #0c2f87;
+}
+
+.hero-mark {
+  justify-self: center;
+  max-width: 420px;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+}
+
+.programs {
+  margin: 50px 0 0;
+}
+
+.program-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.program-card {
+  position: relative;
+  min-height: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  color: #fff;
+  box-shadow: var(--card-shadow);
+  isolation: isolate;
+}
+
+.program-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.65);
+  transition: transform 180ms ease;
+}
+
+.program-card:hover img {
+  transform: scale(1.05);
+}
+
+.program-face,
+.program-hover {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  text-align: center;
+  transition: opacity 180ms ease;
+  background: linear-gradient(180deg, rgba(20, 56, 150, 0.8), rgba(8, 20, 64, 0.9));
+}
+
+.program-face h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.program-hover {
+  opacity: 0;
+  gap: 12px;
+}
+
+.program-hover p {
+  margin: 0;
+  color: #f0f3ff;
+  line-height: 1.5;
+}
+
+.program-card:hover .program-hover {
+  opacity: 1;
+}
+
+.program-card:hover .program-face {
+  opacity: 0;
+}
+
+.outline-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border: 2px solid var(--yellow);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 700;
+  background: transparent;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.outline-btn:hover {
+  background: var(--yellow);
+  color: #0b1d4e;
+  transform: translateY(-1px);
+}
+
+.section {
+  padding: 70px 6vw;
+}
+
+.section-header {
+  margin-bottom: 26px;
+}
+
+.section-header h2 {
+  margin: 6px 0;
+  font-size: clamp(26px, 3.4vw, 34px);
+}
+
+.section-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.process-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) 2fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.process-hero {
+  background: linear-gradient(135deg, #f9d65e, #f5b400);
+  color: #0c1a4f;
+  border-radius: 14px;
+  padding: 28px 24px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.process-hero h2 {
+  margin: 6px 0 0;
+  font-size: clamp(26px, 3.2vw, 36px);
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.process-card {
+  background: #fff;
+  padding: 16px 4px 8px 4px;
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d39100;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step-icon {
+  font-size: 0.9rem;
+}
+
+.step-label {
+  font-size: 0.9rem;
+}
+
+.process-card h3 {
+  margin: 14px 0 8px;
+  font-size: 1.05rem;
+}
+
+.process-card p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.stats {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f3f6ff 100%);
+}
+
+.stats::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(12, 47, 135, 0.05), transparent 40%),
+    url('https://lendinginflorida.com/wp-content/uploads/2023/06/h-watewrmark-2-1024x669.png')
+      center/60% no-repeat;
+  opacity: 0.18;
+}
+
+.stats-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+}
+
+.stat-card {
+  background: linear-gradient(180deg, #f9fbff 0%, #eef2fb 100%);
+  border-radius: 18px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid var(--yellow);
+  box-shadow: 0 18px 40px rgba(12, 47, 135, 0.12);
+}
+
+.stat-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #e7efff;
+  margin: 0 auto 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #d9e4ff;
+}
+
+.stat-icon img {
+  height: 32px;
+  width: 32px;
+  object-fit: contain;
+}
+
+.stat-label {
+  color: #5d6c8f;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+.stat-value {
+  color: var(--blue-900);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-top: 6px;
+}
+
+.quote {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(120deg, rgba(14, 33, 87, 0.96), rgba(31, 89, 215, 0.9));
+  color: #fff;
+}
+
+.quote::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://lendinginflorida.com/wp-content/uploads/2020/08/real-estate-agent-working-in-his-office-P68S2PN-1-1-1.jpg')
+    center/cover no-repeat;
+  opacity: 0.12;
+  mix-blend-mode: soft-light;
+}
+
+.quote::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(12, 47, 135, 0) 0%, rgba(12, 47, 135, 0.35) 100%);
+}
+
+.quote-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.08), transparent 38%);
+  z-index: 1;
+}
+
+.quote-content {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) minmax(320px, 1.1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.quote-left h2 {
+  font-size: clamp(30px, 4vw, 44px);
+  margin: 10px 0 12px;
+}
+
+.quote-sub {
+  color: #dbe5ff;
+  max-width: 520px;
+  margin: 0 0 24px;
+}
+
+.quote-form {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.form-grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.form-grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  font-size: 0.9rem;
+  color: #eef2ff;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #d9e3ff;
+}
+
+.quote .apply-btn.full {
+  width: 100%;
+  margin-top: 14px;
+}
+
+.form-note {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.form-note.success {
+  color: #d7e8ff;
+}
+
+.quote-panel {
+  background: #f9fbff;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e4ebff;
+  box-shadow: 0 12px 30px rgba(12, 47, 135, 0.12);
+}
+
+.partner {
+  background: linear-gradient(180deg, #fdfdfd, #eef2fb);
+}
+
+.partner-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  align-items: center;
+}
+
+.partner img {
+  max-width: 320px;
+  justify-self: center;
+  filter: drop-shadow(0 18px 40px rgba(12, 47, 135, 0.15));
+}
+
+.text-block h3 {
+  margin: 6px 0 10px;
+  color: var(--blue-900);
+}
+
+.text-block p {
+  margin: 0 0 12px;
+  color: var(--text-muted);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  align-items: start;
+}
+
+.team-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  border: 1px solid #e4ebff;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 6px 6px 14px;
+}
+
+.team-photo {
+  width: 100%;
+  height: 360px;
+  object-fit: contain;
+  object-position: center;
+  padding: 10px;
+  background: #f5f7ff;
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 12px 24px rgba(12, 47, 135, 0.08);
+}
+
+.team-card .content {
+  padding: 16px 14px 10px;
+  flex: 1;
+}
+
+.team-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.team-card .role {
+  margin: 4px 0 8px;
+  color: var(--blue-700);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.team-card p {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.team-meta {
+  margin: 12px 0 8px;
+  display: grid;
+  gap: 4px;
+  color: var(--text-dark);
+}
+
+.team-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 16px 16px;
+}
+
+.link {
+  color: var(--blue-800);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.cta-wide {
+  background: linear-gradient(110deg, #0c2f87, #2f6ee6);
+  color: #fff;
+  text-align: center;
+}
+
+.cta-wide p {
+  color: #e9f0ff;
+  margin: 8px auto 16px;
+  max-width: 720px;
+}
+
+.footer {
+  background: #0c2f87;
+  color: #dbe5ff;
+  padding: 26px 6vw 40px;
+}
+
+.footer small {
+  color: #a7b8e8;
+}
+
+.about-hero {
+  position: relative;
+  background: linear-gradient(110deg, rgba(12, 47, 135, 0.9), rgba(18, 63, 190, 0.8)),
+    url('https://lendinginflorida.com/wp-content/uploads/2020/08/real-estate-agent-working-in-his-office-P68S2PN-1-1-1.jpg')
+      center/cover no-repeat;
+  color: #fff;
+  padding: 120px 6vw 140px;
+  overflow: hidden;
+}
+
+.about-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(12, 47, 135, 0.2), rgba(255, 255, 255, 0));
+}
+
+.about-copy {
+  position: relative;
+  max-width: 640px;
+  z-index: 1;
+}
+
+.about-copy h1 {
+  font-size: clamp(32px, 4vw, 44px);
+  margin: 10px 0 8px;
+}
+
+.mission-cards {
+  padding-top: 50px;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.mission-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  border: 1px solid #e4ebff;
+  box-shadow: 0 16px 32px rgba(12, 47, 135, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+
+.mission-card img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.mission-card h3 {
+  margin: 0;
+  color: var(--blue-900);
+}
+
+.mission-card p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.mission-card.photo-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.mission-card.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-hero {
+  position: relative;
+  color: #fff;
+  padding: 90px 6vw 120px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+}
+
+.profile-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(12, 47, 135, 0.88), rgba(47, 110, 230, 0.78));
+}
+
+.profile-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.profile-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+  opacity: 0.4;
+  z-index: -1;
+}
+
+.profile-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-role {
+  font-weight: 700;
+  color: #e0e7ff;
+}
+
+.profile-contact {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: #e6ecff;
+}
+
+.profile-body {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 24px;
+}
+
+.profile-bio h2 {
+  margin-top: 0;
+}
+
+.profile-bio p {
+  color: var(--text-muted);
+}
+
+.profile-bio blockquote {
+  margin: 16px 0 0;
+  padding-left: 14px;
+  border-left: 3px solid var(--blue-700);
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  to {
-    transform: rotate(360deg);
+
+  .process-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-body {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 720px) {
+  .top-bar {
+    padding: 10px 5vw;
   }
-}
 
-.card {
-  padding: 2em;
-}
+  .hero {
+    padding: 70px 5vw;
+  }
 
-.read-the-docs {
-  color: #888;
+  .section {
+    padding: 60px 5vw;
+  }
 }
