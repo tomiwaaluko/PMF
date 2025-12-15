@@ -42,6 +42,19 @@
   color: #0e2157;
 }
 
+.top-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+}
+
+.top-link:hover {
+  text-decoration: underline;
+}
+
 .apply-btn {
   background: #0c2f87;
   color: #fff;
@@ -68,9 +81,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: relative;
+  z-index: 10;
 }
 
 .logo {

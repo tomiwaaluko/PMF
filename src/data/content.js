@@ -140,7 +140,7 @@ export const navLinks = [
       { label: 'Privacy Policy', to: 'https://www.thryv.com/client-privacy-policy/', external: true },
     ],
   },
-  { label: 'Programs', to: '/#programs' },
+  { label: 'Mortgage Programs', to: '/#programs' },
   {
     label: 'Apply Now',
     to: 'https://yourkey.mymortgage-online.com/loan-app/?siteId=5842573753&lar=ahall&workFlowId=99040',
