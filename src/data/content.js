@@ -140,7 +140,15 @@ export const navLinks = [
       { label: 'Privacy Policy', to: 'https://www.thryv.com/client-privacy-policy/', external: true },
     ],
   },
-  { label: 'Mortgage Programs', to: '/#programs' },
+  {
+    label: 'Mortgage Programs',
+    to: '/programs/fha',
+    children: [
+      { label: 'FHA Loan', to: '/programs/fha' },
+      { label: 'Renovation Loan', to: '/programs/renovation' },
+      { label: 'VA Loan', to: '/programs/va' },
+    ],
+  },
   {
     label: 'Apply Now',
     to: 'https://pioneermortgagefunding.my1003app.com/186207/register?time=1765892386601',
