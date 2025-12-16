@@ -16,9 +16,6 @@ function HomePage() {
             <a href="https://pioneermortgagefunding.my1003app.com/186207/register?time=1765892386601">
               <button className="apply-btn">Get Pre-Approved</button>
             </a>
-            <a className="ghost-btn" href="tel:4072179122">
-              Call (407) 217-9122
-            </a>
           </div>
         </div>
         <img
