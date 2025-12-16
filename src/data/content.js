@@ -87,8 +87,7 @@ export const teamMembers = [
     phone: '(321) 332-5944',
     office: '407-217-9122',
     email: 'jgoff@pmfmortgage.com',
-    image:
-      'https://lendinginflorida.com/wp-content/uploads/2023/07/New-Oceans-lending-Jan-3-737x1024.png',
+    image: '/src/assets/Josh-PP.png',
     quote:
       'I intently listen to the requests of my clients and my primary goal is to deliver upon those requests in a timely manner.',
     heroBg:
@@ -103,7 +102,7 @@ export const teamMembers = [
     phone: '407-961-0933',
     office: '407-605-0327',
     email: 'ahall@pmfmortgage.com',
-    image: 'https://lendinginflorida.com/wp-content/uploads/2023/07/sr.png',
+    image: '/src/assets/Andy-PP.png',
     quote:
       'I understand home loans can be complicated and scary. My goal is to have you focus on your new home experience and let me handle the rest of it.',
     heroBg:
@@ -118,7 +117,7 @@ export const teamMembers = [
     phone: '407-272-2538',
     office: '407-605-0332',
     email: 'lalban@pmfmortgage.com',
-    image: 'https://lendinginflorida.com/wp-content/uploads/2023/07/luis-Oceans-blur.png',
+    image: '/src/assets/Luis-PP.jpeg',
     quote:
       'With deep roots in the community here in central Florida, Luis always has a source to tap into in order to make sure he serves you well.',
     heroBg:
