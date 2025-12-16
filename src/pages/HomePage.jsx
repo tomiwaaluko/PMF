@@ -207,7 +207,7 @@ function HomePage() {
               <div className="content">
                 <h3>{person.name}</h3>
                 <div className="role">{person.role}</div>
-                <p>{person.bio}</p>
+                <p>{person.summary}</p>
                 <div className="team-meta">
                   <strong>{person.nmls}</strong>
                   <span>Direct: {person.phone}</span>
