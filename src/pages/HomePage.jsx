@@ -6,11 +6,7 @@ function HomePage() {
     <>
       <section className="hero" id="top">
         <div className="hero-copy">
-          <div className="eyebrow">
-            <span>Our Team</span>
-            <span style={{ width: 36, height: 2, background: '#ffd369', display: 'inline-block' }} />
-          </div>
-          <h1>Find the best rate for your home purchase or refinance.</h1>
+          <h2>Find the best rate for your home purchase or refinance.</h2>
           <p>
             We work with 80+ different online mortgage lenders to find the best home loan offers for your
             home purchase or reinvestment. Our team is committed and ready to help make it easy to get you

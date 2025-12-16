@@ -249,16 +249,18 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
+  align-items: stretch;
 }
 
 .program-card {
   position: relative;
-  min-height: 200px;
+  min-height: clamp(260px, 46vw, 420px);
   border-radius: 12px;
   overflow: hidden;
   color: #fff;
   box-shadow: var(--card-shadow);
   isolation: isolate;
+  perspective: 1000px;
 }
 
 .program-card img {
@@ -271,10 +273,6 @@
   transition: transform 180ms ease;
 }
 
-.program-card:hover img {
-  transform: scale(1.05);
-}
-
 .program-face,
 .program-hover {
   position: absolute;
@@ -283,9 +281,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 18px;
+  padding: 24px;
   text-align: center;
-  transition: opacity 180ms ease;
+  transition: opacity 260ms ease, transform 260ms ease;
   background: linear-gradient(180deg, rgba(20, 56, 150, 0.8), rgba(8, 20, 64, 0.9));
 }
 
@@ -298,20 +296,35 @@
 .program-hover {
   opacity: 0;
   gap: 12px;
+  transform: translateY(20px) scale(0.98);
+  justify-content: space-between;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .program-hover p {
   margin: 0;
   color: #f0f3ff;
   line-height: 1.5;
+  max-width: 100%;
+}
+
+.program-hover::-webkit-scrollbar {
+  display: none;
 }
 
 .program-card:hover .program-hover {
   opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .program-card:hover .program-face {
   opacity: 0;
+  transform: translateY(-12px) scale(0.98);
+}
+
+.program-card:hover img {
+  transform: scale(1.08);
 }
 
 .outline-btn {

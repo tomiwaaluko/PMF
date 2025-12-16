@@ -4,35 +4,35 @@ export const programCards = [
     image:
       'https://lendinginflorida.com/wp-content/uploads/2020/04/financial-accountant-with-mockup-house-consulting-EAGGKKA11-1.jpg',
     description:
-      'Loans that allow flexible underwriting so more buyers can qualify for homeownership.',
+      'Lenders are able to issue loans on mortgages that wouldn’t normally fit conventional underwriting requirements, allowing more people to become homeowners.',
     link: 'https://lendinginflorida.com/fha-loan-florida/',
   },
   {
-    title: 'Non-Owner/Investor Loans',
+    title: 'Home Renovation Loans',
     image:
       'https://lendinginflorida.com/wp-content/uploads/2020/04/real-estate-agency-couple-looking-at-a-model-of-th-MR4CFJA1.jpg',
     description:
-      'Financing built for investment properties with options that prioritize cash flow.',
+      'Offers homebuyers a way to purchase a house in need of repair or modernization',
     link: 'https://lendinginflorida.com/home-equity-loan-rates/',
   },
   {
     title: 'VA Loans',
     image: 'https://lendinginflorida.com/wp-content/uploads/2023/07/va-pic.jpg',
-    description: 'Zero down payment options for eligible veterans and active-duty service members.',
+    description: 'Provide transition assistance and other benefits to men and women who have served or are serving in the Armed Forces of the Nation.',
     link: 'https://lendinginflorida.com/va-loan/',
   },
   {
     title: '15-30 Year Fixed Rate Mortgages',
     image:
       'https://lendinginflorida.com/wp-content/uploads/2020/08/Oceans-lending-background-13.jpg',
-    description: 'Predictable monthly payments with fixed rates and terms up to 30 years.',
+    description: 'Helpful for those who find budget planning important, and with rates at historical lows, this is can be especially appealing to those who plan on staying in the same house for a long time.',
     link: 'https://lendinginflorida.com/current-mortgage-rates-florida/',
   },
   {
     title: 'Conventional Financing',
     image:
       'https://lendinginflorida.com/wp-content/uploads/2020/08/Oceans-lending-background-12.jpg',
-    description: 'Competitive rates for borrowers with solid credit and down payment options.',
+    description: 'The terms and conditions of your mortgage must meet the funding criteria of Fannie Mae and Freddie Mac, two government-sponsored enterprises established to secure mortgages in the form of mortgage-backed securities.',
     link: 'https://lendinginflorida.com/home-buying-process/',
   },
 ]
