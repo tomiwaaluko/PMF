@@ -679,11 +679,49 @@
 }
 
 .quote-panel {
-  background: #f9fbff;
-  padding: 22px;
-  border-radius: 14px;
-  border: 1px solid #e4ebff;
-  box-shadow: 0 12px 30px rgba(12, 47, 135, 0.12);
+  background: linear-gradient(145deg, #123fbe 0%, #0c2f87 55%, #0b2a75 100%);
+  padding: 28px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 16px 36px rgba(12, 47, 135, 0.25);
+  color: #f4f7ff;
+}
+
+.quote-panel .eyebrow {
+  color: #ffd369;
+}
+
+.quote-panel h2 {
+  color: #f7f9ff;
+  margin-bottom: 10px;
+}
+
+.quote-panel .quote-form {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.quote-panel .field label {
+  color: #e8edff;
+}
+
+.quote-panel .field input,
+.quote-panel .field select,
+.quote-panel .field textarea {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #f8fbff;
+  caret-color: #f8fbff;
+}
+
+.quote-panel .field input::placeholder,
+.quote-panel .field textarea::placeholder {
+  color: #dbe5ff;
+}
+
+.quote-panel .form-note.success {
+  color: #dbe5ff;
 }
 
 .partner {

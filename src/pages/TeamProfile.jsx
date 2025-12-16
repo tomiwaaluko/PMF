@@ -29,7 +29,9 @@ function TeamProfile() {
       <section className="section profile-body">
         <div className="profile-bio">
           <h2>About</h2>
-          <p>{member.bio}</p>
+          {member.bio.split(/\n\s*\n/).map((para, idx) => (
+            <p key={idx}>{para}</p>
+          ))}
           {member.quote && <blockquote>“{member.quote}”</blockquote>}
         </div>
         <QuotePanel />
