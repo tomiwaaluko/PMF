@@ -1,3 +1,8 @@
+import JoshPP from "../assets/Josh-PP.png";
+import AndyPP from "../assets/Andy-PP.png";
+import LuisPP from "../assets/Luis-PP.jpeg";
+import LuisPPnew from "../assets/Luis-PPnew.png";
+
 export const programCards = [
   {
     title: "FHA Loans",
@@ -90,7 +95,7 @@ export const teamMembers = [
     phone: "(321) 332-5944",
     office: "407-217-9122",
     email: "jgoff@pmfmortgage.com",
-    image: "/src/assets/Josh-PP.png",
+    image: JoshPP,
     quote:
       "I intently listen to the requests of my clients and my primary goal is to deliver upon those requests in a timely manner.",
     heroBg:
@@ -107,7 +112,7 @@ export const teamMembers = [
     phone: "407-961-0933",
     office: "407-605-0327",
     email: "ahall@pmfmortgage.com",
-    image: "/src/assets/Andy-PP.png",
+    image: AndyPP,
     quote:
       "I understand home loans can be complicated and scary. My goal is to have you focus on your new home experience and let me handle the rest of it.",
     heroBg:
@@ -124,8 +129,8 @@ export const teamMembers = [
     phone: "407-272-2538",
     office: "407-605-0332",
     email: "lalban@pmfmortgage.com",
-    image: "/src/assets/Luis-PPnew.png",
-    profileImage: "/src/assets/Luis-PP.jpeg",
+    image: LuisPPnew,
+    profileImage: LuisPP,
     quote:
       "With deep roots in the community here in central Florida, Luis always has a source to tap into in order to make sure he serves you well.",
     heroBg:

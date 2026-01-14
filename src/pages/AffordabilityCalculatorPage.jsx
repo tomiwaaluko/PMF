@@ -1,4 +1,59 @@
+import { useState } from "react";
+
 function AffordabilityCalculatorPage() {
+  const [annualIncome, setAnnualIncome] = useState("");
+  const [monthlyDebts, setMonthlyDebts] = useState("");
+  const [downPayment, setDownPayment] = useState("");
+  const [interestRate, setInterestRate] = useState("7.0");
+  const [loanTerm, setLoanTerm] = useState("30");
+  const [results, setResults] = useState(null);
+
+  const calculateAffordability = (e) => {
+    e.preventDefault();
+
+    const income = parseFloat(annualIncome);
+    const debts = parseFloat(monthlyDebts) || 0;
+    const down = parseFloat(downPayment) || 0;
+    const rate = parseFloat(interestRate) / 100 / 12;
+    const term = parseInt(loanTerm) * 12;
+
+    // 28/36 rule: housing shouldn't exceed 28% of gross monthly income
+    // Total debt shouldn't exceed 36%
+    const monthlyIncome = income / 12;
+    const maxHousingPayment = monthlyIncome * 0.28;
+    const maxTotalDebt = monthlyIncome * 0.36;
+    const maxMortgagePayment = Math.min(
+      maxHousingPayment,
+      maxTotalDebt - debts
+    );
+
+    // Calculate max loan amount using mortgage payment formula
+    // P = L[c(1 + c)^n]/[(1 + c)^n - 1]
+    // Solving for L: L = P * [(1 + c)^n - 1] / [c(1 + c)^n]
+    const maxLoanAmount =
+      maxMortgagePayment *
+      ((Math.pow(1 + rate, term) - 1) / (rate * Math.pow(1 + rate, term)));
+    const maxHomePrice = maxLoanAmount + down;
+
+    setResults({
+      maxHomePrice: maxHomePrice,
+      maxLoanAmount: maxLoanAmount,
+      monthlyPayment: maxMortgagePayment,
+      monthlyIncome: monthlyIncome,
+      housingRatio: (maxMortgagePayment / monthlyIncome) * 100,
+      debtRatio: ((maxMortgagePayment + debts) / monthlyIncome) * 100,
+    });
+  };
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   return (
     <div className="program-detail">
       <section
@@ -29,31 +84,326 @@ function AffordabilityCalculatorPage() {
       <section className="program-detail-grid section">
         <div className="program-block">
           <div className="eyebrow">Affordability Calculator</div>
-          <h2>Determine your home buying budget</h2>
-          <p>
-            Understanding how much home you can afford is the first step in your
-            home buying journey. Our loan affordability calculator takes into
-            account your income, monthly debts, down payment, and current
-            mortgage rates to provide you with a realistic budget range.
-          </p>
-          <p>
-            Lenders typically use the 28/36 rule: your housing expenses
-            shouldn't exceed 28% of your gross monthly income, and your total
-            debt payments shouldn't exceed 36%. However, different loan programs
-            have different requirements, and we'll help you find the best fit.
-          </p>
+          <h2>Calculate Your Home Buying Budget</h2>
+
+          <form onSubmit={calculateAffordability} style={{ marginTop: "2rem" }}>
+            <div style={{ display: "grid", gap: "1.5rem" }}>
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Annual Household Income
+                </label>
+                <input
+                  type="number"
+                  value={annualIncome}
+                  onChange={(e) => setAnnualIncome(e.target.value)}
+                  placeholder="e.g., 75000"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "1rem",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Monthly Debt Payments (car, credit cards, etc.)
+                </label>
+                <input
+                  type="number"
+                  value={monthlyDebts}
+                  onChange={(e) => setMonthlyDebts(e.target.value)}
+                  placeholder="e.g., 500"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "1rem",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Down Payment
+                </label>
+                <input
+                  type="number"
+                  value={downPayment}
+                  onChange={(e) => setDownPayment(e.target.value)}
+                  placeholder="e.g., 20000"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "1rem",
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                }}
+              >
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Interest Rate (%)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.125"
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Loan Term (years)
+                  </label>
+                  <select
+                    value={loanTerm}
+                    onChange={(e) => setLoanTerm(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    <option value="15">15 years</option>
+                    <option value="30">30 years</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  padding: "1rem 2rem",
+                  backgroundColor: "#0c2f87",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  marginTop: "1rem",
+                }}
+              >
+                Calculate Affordability
+              </button>
+            </div>
+          </form>
+
+          {results && (
+            <div
+              style={{
+                marginTop: "2rem",
+                padding: "2rem",
+                backgroundColor: "#f8f9fa",
+                borderRadius: "8px",
+                border: "2px solid #0c2f87",
+              }}
+            >
+              <h3 style={{ marginBottom: "1.5rem", color: "#0c2f87" }}>
+                Your Results
+              </h3>
+
+              <div style={{ display: "grid", gap: "1rem" }}>
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    backgroundColor: "white",
+                    borderRadius: "4px",
+                    borderLeft: "4px solid #0c2f87",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#666",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    Maximum Home Price
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "2rem",
+                      fontWeight: "bold",
+                      color: "#0c2f87",
+                    }}
+                  >
+                    {formatCurrency(results.maxHomePrice)}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    backgroundColor: "white",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#666",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    Maximum Loan Amount
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                    {formatCurrency(results.maxLoanAmount)}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    backgroundColor: "white",
+                    borderRadius: "4px",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: "0.875rem",
+                      color: "#666",
+                      marginBottom: "0.25rem",
+                    }}
+                  >
+                    Estimated Monthly Payment
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
+                    {formatCurrency(results.monthlyPayment)}
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    backgroundColor: "white",
+                    borderRadius: "4px",
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "1rem",
+                  }}
+                >
+                  <div>
+                    <div
+                      style={{
+                        fontSize: "0.875rem",
+                        color: "#666",
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      Housing Ratio
+                    </div>
+                    <div style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                      {results.housingRatio.toFixed(1)}%
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style={{
+                        fontSize: "0.875rem",
+                        color: "#666",
+                        marginBottom: "0.25rem",
+                      }}
+                    >
+                      Total Debt Ratio
+                    </div>
+                    <div style={{ fontSize: "1.25rem", fontWeight: "bold" }}>
+                      {results.debtRatio.toFixed(1)}%
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p
+                style={{
+                  marginTop: "1.5rem",
+                  fontSize: "0.875rem",
+                  color: "#666",
+                }}
+              >
+                * This calculation uses the 28/36 rule. Results are estimates
+                and actual approval amounts may vary. Contact us for a
+                personalized quote.
+              </p>
+            </div>
+          )}
         </div>
+
         <div className="program-block accent">
-          <h3>What you'll need:</h3>
+          <h3>Understanding the Results</h3>
           <ul>
-            <li>Annual household income (gross)</li>
             <li>
-              Monthly debt payments (car loans, student loans, credit cards)
+              <strong>Housing Ratio:</strong> Should be under 28% of gross
+              income
             </li>
-            <li>Estimated down payment amount</li>
-            <li>Expected property taxes and insurance costs</li>
-            <li>HOA fees (if applicable)</li>
-            <li>Current interest rates for your loan type</li>
+            <li>
+              <strong>Total Debt Ratio:</strong> Should be under 36% of gross
+              income
+            </li>
+            <li>
+              <strong>Down Payment:</strong> Larger down payments increase
+              buying power
+            </li>
+            <li>
+              <strong>Interest Rate:</strong> Lower rates mean more buying power
+            </li>
+            <li>These are estimates based on the 28/36 rule</li>
+            <li>Different loan programs may have different requirements</li>
           </ul>
         </div>
       </section>

@@ -1,4 +1,64 @@
+import { useState } from "react";
+
 function BuyingHomePage() {
+  const [homePrice, setHomePrice] = useState("");
+  const [downPayment, setDownPayment] = useState("");
+  const [interestRate, setInterestRate] = useState("7.0");
+  const [loanTerm, setLoanTerm] = useState("30");
+  const [propertyTax, setPropertyTax] = useState("");
+  const [homeInsurance, setHomeInsurance] = useState("");
+  const [hoaFees, setHoaFees] = useState("");
+  const [results, setResults] = useState(null);
+
+  const calculatePayment = (e) => {
+    e.preventDefault();
+
+    const price = parseFloat(homePrice);
+    const down = parseFloat(downPayment) || 0;
+    const rate = parseFloat(interestRate) / 100 / 12;
+    const term = parseInt(loanTerm) * 12;
+    const tax = parseFloat(propertyTax) || 0;
+    const insurance = parseFloat(homeInsurance) || 0;
+    const hoa = parseFloat(hoaFees) || 0;
+
+    const loanAmount = price - down;
+    const downPercent = (down / price) * 100;
+
+    // Calculate PMI if down payment is less than 20%
+    const pmi = downPercent < 20 ? (loanAmount * 0.005) / 12 : 0;
+
+    // Calculate monthly mortgage payment (P&I)
+    const monthlyPayment =
+      (loanAmount * (rate * Math.pow(1 + rate, term))) /
+      (Math.pow(1 + rate, term) - 1);
+
+    const totalMonthly = monthlyPayment + tax / 12 + insurance / 12 + hoa + pmi;
+    const totalInterest = monthlyPayment * term - loanAmount;
+    const totalCost = monthlyPayment * term + down;
+
+    setResults({
+      loanAmount,
+      downPercent,
+      monthlyPrincipalInterest: monthlyPayment,
+      monthlyTax: tax / 12,
+      monthlyInsurance: insurance / 12,
+      monthlyHOA: hoa,
+      monthlyPMI: pmi,
+      totalMonthly,
+      totalInterest,
+      totalCost,
+    });
+  };
+
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
+
   return (
     <div className="program-detail">
       <section
@@ -10,10 +70,10 @@ function BuyingHomePage() {
       >
         <div className="program-hero-inner">
           <p className="eyebrow">Tools</p>
-          <h1>Buying a Home Guide</h1>
+          <h1>Mortgage Payment Calculator</h1>
           <p>
-            Your complete resource for navigating the home buying process from
-            start to finish.
+            Calculate your monthly mortgage payment including taxes, insurance,
+            and HOA fees.
           </p>
           <div className="cta-row">
             <a href="https://pioneermortgagefunding.my1003app.com/186207/register">
@@ -28,43 +88,436 @@ function BuyingHomePage() {
 
       <section className="program-detail-grid section">
         <div className="program-block">
-          <div className="eyebrow">Home Buying Process</div>
-          <h2>Your step-by-step guide to homeownership</h2>
-          <p>
-            Buying a home is one of the most significant financial decisions
-            you'll make. Whether you're a first-time buyer or a seasoned
-            homeowner, understanding each step of the process helps you make
-            informed decisions and avoid common pitfalls.
-          </p>
-          <p>
-            From getting pre-approved to closing day, we'll guide you through
-            every stage of your home buying journey. Our team is committed to
-            making the process as smooth and stress-free as possible.
-          </p>
+          <div className="eyebrow">Payment Calculator</div>
+          <h2>Estimate Your Monthly Mortgage Payment</h2>
+
+          <form onSubmit={calculatePayment} style={{ marginTop: "2rem" }}>
+            <div style={{ display: "grid", gap: "1.5rem" }}>
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Home Price
+                </label>
+                <input
+                  type="number"
+                  value={homePrice}
+                  onChange={(e) => setHomePrice(e.target.value)}
+                  placeholder="e.g., 350000"
+                  required
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "1rem",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    marginBottom: "0.5rem",
+                    fontWeight: "600",
+                  }}
+                >
+                  Down Payment
+                </label>
+                <input
+                  type="number"
+                  value={downPayment}
+                  onChange={(e) => setDownPayment(e.target.value)}
+                  placeholder="e.g., 70000"
+                  style={{
+                    width: "100%",
+                    padding: "0.75rem",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    fontSize: "1rem",
+                  }}
+                />
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1rem",
+                }}
+              >
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Interest Rate (%)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.125"
+                    value={interestRate}
+                    onChange={(e) => setInterestRate(e.target.value)}
+                    required
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Loan Term (years)
+                  </label>
+                  <select
+                    value={loanTerm}
+                    onChange={(e) => setLoanTerm(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  >
+                    <option value="15">15 years</option>
+                    <option value="30">30 years</option>
+                  </select>
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr 1fr",
+                  gap: "1rem",
+                }}
+              >
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Annual Property Tax
+                  </label>
+                  <input
+                    type="number"
+                    value={propertyTax}
+                    onChange={(e) => setPropertyTax(e.target.value)}
+                    placeholder="e.g., 4200"
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Annual Insurance
+                  </label>
+                  <input
+                    type="number"
+                    value={homeInsurance}
+                    onChange={(e) => setHomeInsurance(e.target.value)}
+                    placeholder="e.g., 1800"
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    style={{
+                      display: "block",
+                      marginBottom: "0.5rem",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Monthly HOA Fees
+                  </label>
+                  <input
+                    type="number"
+                    value={hoaFees}
+                    onChange={(e) => setHoaFees(e.target.value)}
+                    placeholder="e.g., 150"
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem",
+                      border: "1px solid #ccc",
+                      borderRadius: "4px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                style={{
+                  padding: "1rem 2rem",
+                  backgroundColor: "#0c2f87",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  fontSize: "1rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  marginTop: "1rem",
+                }}
+              >
+                Calculate Payment
+              </button>
+            </div>
+          </form>
+
+          {results && (
+            <div
+              style={{
+                marginTop: "2rem",
+                padding: "2rem",
+                backgroundColor: "#f8f9fa",
+                borderRadius: "8px",
+                border: "2px solid #0c2f87",
+              }}
+            >
+              <h3 style={{ marginBottom: "1.5rem", color: "#0c2f87" }}>
+                Your Monthly Payment Breakdown
+              </h3>
+
+              <div
+                style={{
+                  padding: "1.5rem",
+                  backgroundColor: "white",
+                  borderRadius: "4px",
+                  borderLeft: "4px solid #0c2f87",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: "0.875rem",
+                    color: "#666",
+                    marginBottom: "0.25rem",
+                  }}
+                >
+                  Total Monthly Payment
+                </div>
+                <div
+                  style={{
+                    fontSize: "2.5rem",
+                    fontWeight: "bold",
+                    color: "#0c2f87",
+                  }}
+                >
+                  {formatCurrency(results.totalMonthly)}
+                </div>
+                <div
+                  style={{
+                    fontSize: "0.875rem",
+                    marginTop: "0.5rem",
+                    color: "#666",
+                  }}
+                >
+                  Loan Amount: {formatCurrency(results.loanAmount)} (
+                  {results.downPercent.toFixed(1)}% down)
+                </div>
+              </div>
+
+              <div style={{ display: "grid", gap: "0.75rem" }}>
+                <div
+                  style={{
+                    padding: "1rem",
+                    backgroundColor: "white",
+                    borderRadius: "4px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>Principal & Interest</span>
+                  <strong style={{ fontSize: "1.125rem" }}>
+                    {formatCurrency(results.monthlyPrincipalInterest)}
+                  </strong>
+                </div>
+
+                {results.monthlyTax > 0 && (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      backgroundColor: "white",
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>Property Tax</span>
+                    <strong style={{ fontSize: "1.125rem" }}>
+                      {formatCurrency(results.monthlyTax)}
+                    </strong>
+                  </div>
+                )}
+
+                {results.monthlyInsurance > 0 && (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      backgroundColor: "white",
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>Home Insurance</span>
+                    <strong style={{ fontSize: "1.125rem" }}>
+                      {formatCurrency(results.monthlyInsurance)}
+                    </strong>
+                  </div>
+                )}
+
+                {results.monthlyHOA > 0 && (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      backgroundColor: "white",
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>HOA Fees</span>
+                    <strong style={{ fontSize: "1.125rem" }}>
+                      {formatCurrency(results.monthlyHOA)}
+                    </strong>
+                  </div>
+                )}
+
+                {results.monthlyPMI > 0 && (
+                  <div
+                    style={{
+                      padding: "1rem",
+                      backgroundColor: "#fff3cd",
+                      borderRadius: "4px",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span>PMI (Private Mortgage Insurance)</span>
+                    <strong style={{ fontSize: "1.125rem" }}>
+                      {formatCurrency(results.monthlyPMI)}
+                    </strong>
+                  </div>
+                )}
+              </div>
+
+              <div
+                style={{
+                  marginTop: "1.5rem",
+                  padding: "1.5rem",
+                  backgroundColor: "white",
+                  borderRadius: "4px",
+                }}
+              >
+                <h4 style={{ marginBottom: "1rem" }}>Loan Summary</h4>
+                <div style={{ display: "grid", gap: "0.5rem" }}>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <span>Total Interest Paid:</span>
+                    <strong>{formatCurrency(results.totalInterest)}</strong>
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <span>Total Cost of Home:</span>
+                    <strong>{formatCurrency(results.totalCost)}</strong>
+                  </div>
+                </div>
+              </div>
+
+              {results.monthlyPMI > 0 && (
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    padding: "1rem",
+                    backgroundColor: "#fff3cd",
+                    borderRadius: "4px",
+                    fontSize: "0.875rem",
+                  }}
+                >
+                  <strong>Note:</strong> PMI is required when down payment is
+                  less than 20%. You can request PMI removal once you reach 20%
+                  equity.
+                </div>
+              )}
+            </div>
+          )}
         </div>
+
         <div className="program-block accent">
-          <h3>The home buying timeline:</h3>
+          <h3>Understanding Your Payment</h3>
           <ul>
             <li>
-              <strong>Pre-Approval:</strong> Get pre-qualified to understand
-              your budget
+              <strong>Principal & Interest:</strong> Your base mortgage payment
             </li>
             <li>
-              <strong>Home Search:</strong> Find properties that meet your needs
-              and budget
+              <strong>Property Tax:</strong> Annual taxes divided by 12 months
             </li>
             <li>
-              <strong>Make an Offer:</strong> Submit a competitive offer with
-              your agent
+              <strong>Home Insurance:</strong> Required protection for your
+              investment
             </li>
             <li>
-              <strong>Under Contract:</strong> Complete inspections and finalize
-              financing
+              <strong>PMI:</strong> Required if down payment is less than 20%
             </li>
             <li>
-              <strong>Closing:</strong> Sign documents and receive your keys!
+              <strong>HOA Fees:</strong> Community association fees if
+              applicable
             </li>
           </ul>
+          <p style={{ marginTop: "1rem", fontSize: "0.875rem" }}>
+            Remember to budget for utilities, maintenance, and repairs in
+            addition to your mortgage payment.
+          </p>
         </div>
       </section>
 
