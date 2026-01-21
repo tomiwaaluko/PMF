@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage";
 import RenovationLoanPage from "./pages/RenovationLoanPage";
 import TeamProfile from "./pages/TeamProfile";
 import VaLoanPage from "./pages/VaLoanPage";
-import MortgageRatePage from "./pages/MortgageRatePage";
+// import MortgageRatePage from "./pages/MortgageRatePage";
 import AffordabilityCalculatorPage from "./pages/AffordabilityCalculatorPage";
 import RefinanceCalculatorPage from "./pages/RefinanceCalculatorPage";
 import BuyingHomePage from "./pages/BuyingHomePage";
@@ -27,7 +27,7 @@ function App() {
         <Route path="/programs/fha" element={<FhaLoanPage />} />
         <Route path="/programs/renovation" element={<RenovationLoanPage />} />
         <Route path="/programs/va" element={<VaLoanPage />} />
-        <Route path="/tools/mortgage-rate" element={<MortgageRatePage />} />
+        {/* <Route path="/tools/mortgage-rate" element={<MortgageRatePage />} /> */}
         <Route
           path="/tools/affordability-calculator"
           element={<AffordabilityCalculatorPage />}

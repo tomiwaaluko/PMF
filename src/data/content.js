@@ -148,7 +148,11 @@ export const navLinks = [
         label: member.name,
         to: `/team/${member.slug}`,
       })),
-      { label: 'Privacy Policy', to: 'https://www.thryv.com/client-privacy-policy/', external: true },
+      {
+        label: "Privacy Policy",
+        to: "https://www.thryv.com/client-privacy-policy/",
+        external: true,
+      },
     ],
   },
   {
@@ -162,9 +166,9 @@ export const navLinks = [
   },
   {
     label: "Tools",
-    to: "/tools/mortgage-rate",
+    to: "/tools/affordability-calculator",
     children: [
-      { label: "Mortgage Rate", to: "/tools/mortgage-rate" },
+      // { label: "Mortgage Rate", to: "/tools/mortgage-rate" },
       {
         label: "Loan Affordability Calculator",
         to: "/tools/affordability-calculator",
