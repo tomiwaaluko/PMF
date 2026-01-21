@@ -37,7 +37,7 @@ function TeamProfile() {
           ))}
           {member.quote && <blockquote>“{member.quote}”</blockquote>}
         </div>
-        <QuotePanel />
+        <QuotePanel email={member.email} />
       </section>
 
       <section className="section cta-wide">

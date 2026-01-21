@@ -107,8 +107,8 @@ function HomePage() {
       submittedAt: new Date().toISOString(),
     };
 
-    // Create email recipients list
-    const recipients = teamMembers.map((member) => member.email).join(",");
+    // Send to Joshua Goff (main page)
+    const recipients = "jgoff@pmfmortgage.com";
 
     // Create mailto link with JSON data
     const subject = encodeURIComponent("New Quote Request from Website");
@@ -116,8 +116,8 @@ function HomePage() {
       `New quote request received:\n\n${JSON.stringify(
         emailData,
         null,
-        2
-      )}\n\nPlease follow up with the customer.`
+        2,
+      )}\n\nPlease follow up with the customer.`,
     );
 
     // Open default email client
