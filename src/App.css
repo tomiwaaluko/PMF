@@ -14,7 +14,8 @@
 }
 
 .page {
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 20% 20%,
       rgba(255, 255, 255, 0.75),
       transparent 40%
@@ -84,7 +85,10 @@
   font-size: 1rem;
   letter-spacing: 0.02em;
   cursor: pointer;
-  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
   box-shadow: 0 12px 30px rgba(12, 47, 135, 0.2);
 }
 
@@ -130,7 +134,9 @@
 .menu a {
   padding: 8px 10px;
   border-radius: 6px;
-  transition: background 150ms ease, color 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease;
 }
 
 .menu a:hover {
@@ -169,7 +175,9 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(-6px);
-  transition: opacity 150ms ease, transform 150ms ease;
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease;
 }
 
 .nav-item:hover .dropdown {
@@ -274,7 +282,10 @@
   letter-spacing: 0.02em;
   cursor: pointer;
   text-decoration: none;
-  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease,
+    background 150ms ease;
   box-shadow: 0 12px 30px rgba(255, 255, 255, 0.3);
 }
 
@@ -313,17 +324,21 @@
   border-radius: 16px;
   overflow: hidden;
   color: #fff;
-  box-shadow: 0 4px 12px rgba(12, 47, 135, 0.15),
+  box-shadow:
+    0 4px 12px rgba(12, 47, 135, 0.15),
     0 2px 4px rgba(12, 47, 135, 0.1);
   isolation: isolate;
   perspective: 1000px;
-  transition: box-shadow 300ms ease, transform 300ms ease;
+  transition:
+    box-shadow 300ms ease,
+    transform 300ms ease;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .program-card:hover {
-  box-shadow: 0 12px 32px rgba(12, 47, 135, 0.25),
+  box-shadow:
+    0 12px 32px rgba(12, 47, 135, 0.25),
     0 4px 12px rgba(12, 47, 135, 0.15);
   transform: translateY(-4px);
 }
@@ -335,7 +350,9 @@
   height: 100%;
   object-fit: cover;
   filter: brightness(0.7);
-  transition: transform 400ms ease, filter 300ms ease;
+  transition:
+    transform 400ms ease,
+    filter 300ms ease;
 }
 
 .program-face,
@@ -348,7 +365,9 @@
   justify-content: center;
   padding: 32px;
   text-align: center;
-  transition: opacity 300ms ease, transform 300ms ease;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
   background: linear-gradient(
     180deg,
     rgba(12, 47, 135, 0.85),
@@ -442,7 +461,9 @@
   flex-direction: column;
   gap: 16px;
   border: 1px solid rgba(12, 47, 135, 0.04);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .program-block:hover {
@@ -586,7 +607,10 @@
   border-radius: 8px;
   font-weight: 700;
   background: transparent;
-  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+  transition:
+    background 150ms ease,
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .outline-btn:hover {
@@ -688,7 +712,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 20% 20%,
       rgba(12, 47, 135, 0.05),
       transparent 40%
@@ -1051,11 +1076,8 @@
 
 .about-hero {
   position: relative;
-  background: linear-gradient(
-      110deg,
-      rgba(12, 47, 135, 0.9),
-      rgba(18, 63, 190, 0.8)
-    ),
+  background:
+    linear-gradient(110deg, rgba(12, 47, 135, 0.9), rgba(18, 63, 190, 0.8)),
     url("https://lendinginflorida.com/wp-content/uploads/2020/08/real-estate-agent-working-in-his-office-P68S2PN-1-1-1.jpg")
       center/cover no-repeat;
   color: #fff;
@@ -1189,6 +1211,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
 }
 
 .profile-role {
