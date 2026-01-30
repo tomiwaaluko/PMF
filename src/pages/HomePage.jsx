@@ -272,13 +272,13 @@ function HomePage() {
           </div>
 
           <form className="quote-form" onSubmit={handleSubmit}>
-            <div className="form-grid form-grid-3">
+            <div className="form-grid form-grid-2">
               <div className="field">
                 <label htmlFor="name">Name</label>
                 <input
                   id="name"
                   name="name"
-                  placeholder="First Name"
+                  placeholder="Name"
                   value={formData.name}
                   onChange={handleInputChange}
                 />
@@ -293,17 +293,19 @@ function HomePage() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="field">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                />
-              </div>
+            </div>
+            <div className="field">
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-grid form-grid-2">
               <div className="field">
                 <label htmlFor="loanType">Type Of Loan *</label>
                 <select
@@ -339,27 +341,27 @@ function HomePage() {
                   <option value="improving">Building credit</option>
                 </select>
               </div>
-              <div className="field field-full">
-                <label htmlFor="propertyValue">Property Value *</label>
-                <select
-                  id="propertyValue"
-                  name="propertyValue"
-                  value={formData.propertyValue}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="" disabled>
-                    Select One
-                  </option>
-                  <option value="300-500">$300,000 - $500,000</option>
-                  <option value="500-750">$500,001 - $750,000</option>
-                  <option value="750-1m">$750,001 - $1,000,000</option>
-                  <option value="1m-plus">$1,000,001+</option>
-                </select>
-              </div>
+            </div>
+            <div className="field">
+              <label htmlFor="propertyValue">Property Value *</label>
+              <select
+                id="propertyValue"
+                name="propertyValue"
+                value={formData.propertyValue}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="" disabled>
+                  Select One
+                </option>
+                <option value="300-500">$300,000 - $500,000</option>
+                <option value="500-750">$500,001 - $750,000</option>
+                <option value="750-1m">$750,001 - $1,000,000</option>
+                <option value="1m-plus">$1,000,001+</option>
+              </select>
             </div>
             <button
-              className="apply-btn"
+              className="apply-btn full"
               type="submit"
               disabled={isSubmitting}
               style={{
@@ -371,7 +373,14 @@ function HomePage() {
               {isSubmitting ? "Sending..." : "Send"}
             </button>
             {showSuccess && (
-              <div className="form-note success">
+              <div
+                className="form-note success"
+                style={{
+                  marginTop: "10px",
+                  color: "#4ade80",
+                  fontWeight: "600",
+                }}
+              >
                 ✓ Your submission was successful.
               </div>
             )}
