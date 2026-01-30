@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
 import { programCards, steps, stats, teamMembers } from "../data/content";
+import { EMAILJS_CONFIG, getRecipientEmail } from "../utils/emailConfig";
 
 const heroSlides = [
   {
@@ -101,46 +103,64 @@ function HomePage() {
 
     setIsSubmitting(true);
 
-    // Prepare email data
-    const emailData = {
-      ...formData,
-      submittedAt: new Date().toISOString(),
-    };
+    try {
+      // Determine recipient email - Home page sends to Josh (or LUIS for testing)
+      const recipientEmail = getRecipientEmail("/");
 
-    // Send to Joshua Goff (main page)
-    const recipients = "jgoff@pmfmortgage.com";
+      // Prepare email data as JSON
+      const emailData = {
+        ...formData,
+        submittedAt: new Date().toISOString(),
+        submittedFrom: "/ (Home Page)",
+      };
 
-    // Create mailto link with JSON data
-    const subject = encodeURIComponent("New Quote Request from Website");
-    const body = encodeURIComponent(
-      `New quote request received:\n\n${JSON.stringify(
-        emailData,
-        null,
-        2,
-      )}\n\nPlease follow up with the customer.`,
-    );
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        to_email: recipientEmail,
+        from_name:
+          `${formData.name} ${formData.lastName}`.trim() || "Anonymous",
+        from_email: formData.email || "Not provided",
+        subject: "New Quote Request from Website",
+        message_json: JSON.stringify(emailData, null, 2),
+        loan_type: formData.loanType,
+        credit_history: formData.creditHistory,
+        property_value: formData.propertyValue,
+        page_url: window.location.href,
+      };
 
-    // Open default email client
-    window.location.href = `mailto:${recipients}?subject=${subject}&body=${body}`;
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        templateParams,
+        EMAILJS_CONFIG.publicKey,
+      );
 
-    // Show success message
-    setShowSuccess(true);
-    setIsSubmitting(false);
+      // Show success message
+      setShowSuccess(true);
 
-    // Reset form
-    setFormData({
-      name: "",
-      lastName: "",
-      email: "",
-      loanType: "",
-      creditHistory: "",
-      propertyValue: "",
-    });
+      // Reset form
+      setFormData({
+        name: "",
+        lastName: "",
+        email: "",
+        loanType: "",
+        creditHistory: "",
+        propertyValue: "",
+      });
 
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert(
+        "There was an error sending your request. Please try again or contact us directly.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -338,7 +358,16 @@ function HomePage() {
                 </select>
               </div>
             </div>
-            <button className="apply-btn" type="submit" disabled={isSubmitting}>
+            <button
+              className="apply-btn"
+              type="submit"
+              disabled={isSubmitting}
+              style={{
+                minWidth: "150px",
+                padding: "12px 32px",
+                fontSize: "16px",
+              }}
+            >
               {isSubmitting ? "Sending..." : "Send"}
             </button>
             {showSuccess && (

@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+import emailjs from "@emailjs/browser";
+import { EMAILJS_CONFIG, getRecipientEmail } from "../utils/emailConfig";
 
 function QuotePanel({ email = "jgoff@pmfmortgage.com" }) {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     name: "",
     lastName: "",
@@ -32,39 +36,64 @@ function QuotePanel({ email = "jgoff@pmfmortgage.com" }) {
 
     setIsSubmitting(true);
 
-    // Prepare email data
-    const emailData = {
-      ...formData,
-      submittedAt: new Date().toISOString(),
-    };
+    try {
+      // Determine recipient email based on current page or provided email prop
+      const recipientEmail = email || getRecipientEmail(location.pathname);
 
-    // Create mailto link
-    const subject = encodeURIComponent("New Quote Request from Website");
-    const body = encodeURIComponent(
-      `New quote request received:\n\n${JSON.stringify(emailData, null, 2)}\n\nPlease follow up with the customer.`,
-    );
+      // Prepare email data as JSON
+      const emailData = {
+        ...formData,
+        submittedAt: new Date().toISOString(),
+        submittedFrom: location.pathname,
+      };
 
-    // Open default email client
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      // Prepare template parameters for EmailJS
+      const templateParams = {
+        to_email: recipientEmail,
+        from_name:
+          `${formData.name} ${formData.lastName}`.trim() || "Anonymous",
+        from_email: formData.email || "Not provided",
+        subject: "New Quote Request from Website",
+        message_json: JSON.stringify(emailData, null, 2),
+        loan_type: formData.loanType,
+        credit_history: formData.creditHistory,
+        property_value: formData.propertyValue,
+        page_url: window.location.href,
+      };
 
-    // Show success message
-    setShowSuccess(true);
-    setIsSubmitting(false);
+      // Send email using EmailJS
+      await emailjs.send(
+        EMAILJS_CONFIG.serviceId,
+        EMAILJS_CONFIG.templateId,
+        templateParams,
+        EMAILJS_CONFIG.publicKey,
+      );
 
-    // Reset form
-    setFormData({
-      name: "",
-      lastName: "",
-      email: "",
-      loanType: "",
-      creditHistory: "",
-      propertyValue: "",
-    });
+      // Show success message
+      setShowSuccess(true);
 
-    // Hide success message after 5 seconds
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 5000);
+      // Reset form
+      setFormData({
+        name: "",
+        lastName: "",
+        email: "",
+        loanType: "",
+        creditHistory: "",
+        propertyValue: "",
+      });
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 5000);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      alert(
+        "There was an error sending your request. Please try again or contact us directly.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -166,6 +195,11 @@ function QuotePanel({ email = "jgoff@pmfmortgage.com" }) {
           className="apply-btn full"
           type="submit"
           disabled={isSubmitting}
+          style={{
+            minWidth: "150px",
+            padding: "12px 32px",
+            fontSize: "16px",
+          }}
         >
           {isSubmitting ? "Sending..." : "Send"}
         </button>
